@@ -24,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 class MedicoRepositoryTest {
 
+
     @Autowired
     private MedicoRepository repository;
 
@@ -33,19 +34,36 @@ class MedicoRepositoryTest {
     @Test
     @DisplayName("Debería volver null cuando el médico buscado existe pero no está disponible en esa fecha")
     void elegirMedicoAleatorioDisponibleEnLaFechaEscenario1() {
+        //given o arrange
         var lunesSiguienteALas10 = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).atTime(10, 0);
 
         var medico = registrarMedico("Medico1", "medigo@gmail.com", "12345", Especialidad.CARDIOLOGIA);
         var paciente = registrarPaciente("Paciente1", "paciente@gmail.com", "123456");
         registrarConsulta(medico, paciente, lunesSiguienteALas10);
 
+        //when o act
         var medicoLibre = repository.elegirMedicoAleatorioDisponibleEnLaFecha(Especialidad.CARDIOLOGIA, lunesSiguienteALas10);
+        //then o assert
         assertThat(medicoLibre).isNull();
     }
 
+    @Test
+    @DisplayName("Debería volver médico cuando el médico buscado está disponible en esa fecha")
+    void elegirMedicoAleatorioDisponibleEnLaFechaEscenario2() {
+        //given o arrange
+        var lunesSiguienteALas10 = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).atTime(10, 0);
+        var medico = registrarMedico("Medico1", "medigo@gmail.com", "12345", Especialidad.CARDIOLOGIA);
+
+        //when o act
+        var medicoLibre = repository.elegirMedicoAleatorioDisponibleEnLaFecha(Especialidad.CARDIOLOGIA, lunesSiguienteALas10);
+        //then o assert
+        assertThat(medicoLibre).isEqualTo(medico);
+    }
+
+
 
     private void registrarConsulta(Medico medico, Paciente paciente, LocalDateTime fecha) {
-        em.persist(new Consulta(null, medico, paciente, fecha));
+        em.persist(new Consulta(null, medico, paciente, fecha, null));
     }
 
     private Medico registrarMedico(String nombre, String email, String documento, Especialidad especialidad) {
