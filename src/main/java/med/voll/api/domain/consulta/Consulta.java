@@ -1,7 +1,9 @@
 package med.voll.api.domain.consulta;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.paciente.Paciente;
 
@@ -12,8 +14,6 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 public class Consulta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +33,6 @@ public class Consulta {
     @Enumerated(EnumType.STRING)
     private MotivoCancelamiento motivoCancelamiento;
 
-    public void cancelar(MotivoCancelamiento motivo) {
-        this.motivoCancelamiento = motivo;
+    public Consulta(Long id, Medico medico, Paciente paciente, LocalDateTime fecha) {
     }
-
 }

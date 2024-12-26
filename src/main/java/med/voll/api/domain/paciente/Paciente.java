@@ -1,15 +1,22 @@
 package med.voll.api.domain.paciente;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import med.voll.api.domain.direccion.Direccion;
 
 @EqualsAndHashCode(of = "id")
 @Entity(name = "Paciente")
 @Table(name = "pacientes")
-public class Paciente {@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Paciente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String nombre;
     private String email;
@@ -29,10 +36,6 @@ private Long id;
         this.direccion = new Direccion(datos.direccion());
     }
 
-    public Paciente() {
-
-    }
-
     public void atualizarInformacion(DatosActualizacionPaciente datos) {
         if (datos.nombre() != null)
             this.nombre = datos.nombre();
@@ -42,65 +45,5 @@ private Long id;
 
         if (datos.direccion() != null)
             direccion.actualizarDatos(datos.direccion());
-    }
-
-    public void inactivar() {
-        this.activo = false;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDocumentoIdentidad() {
-        return documentoIdentidad;
-    }
-
-    public void setDocumentoIdentidad(String documentoIdentidad) {
-        this.documentoIdentidad = documentoIdentidad;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public Direccion getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
-    }
-
-    public Boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
     }
 }

@@ -40,7 +40,7 @@ public class PacienteController {
     @Transactional
     public void remover(@PathVariable Long id) {
         var paciente = repository.getReferenceById(id);
-        paciente.inactivar();
+        paciente.setActivo(false);
     }
 
 }

@@ -1,7 +1,10 @@
 package med.voll.api.domain.usuarios;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +15,9 @@ import java.util.List;
 @Table(name = "usuarios")
 @Entity(name = "Usuario")
 @EqualsAndHashCode(of = "id")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario implements UserDetails {
 
     @Id
@@ -19,9 +25,6 @@ public class Usuario implements UserDetails {
     private Long id;
     private String login;
     private String clave;
-
-    public Usuario() {
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -35,10 +38,6 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
-    }
-
-    public String getLogin() {
         return login;
     }
 
@@ -60,25 +59,5 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String contrasena) {
-        this.clave = contrasena;
     }
 }

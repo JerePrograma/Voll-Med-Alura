@@ -49,7 +49,7 @@ public class ReservaDeConsultas {
         }
         var paciente = pacienteRepository.findById(datos.idPaciente()).get();
 
-        var consulta = new Consulta(null, medico, paciente, datos.fecha(), null);
+        var consulta = new Consulta(null, medico, paciente, datos.fecha());
         consultaRepository.save(consulta);
         return new DatosDetalleConsulta(consulta);
     }
@@ -62,7 +62,7 @@ public class ReservaDeConsultas {
         validadoresCancelamiento.forEach(v -> v.validar(datos));
 
         var consulta = consultaRepository.getReferenceById(datos.idConsulta());
-        consulta.cancelar(datos.motivo());
+        consulta.setMotivoCancelamiento(datos.motivo());
     }
 
     private Medico elegirMedico(DatosReservaConsulta datos) {

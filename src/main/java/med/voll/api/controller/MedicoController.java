@@ -56,7 +56,7 @@ public class MedicoController {
     @Transactional
     public ResponseEntity darBajaMedico(@PathVariable long id) {
         Medico medico = medicoRepository.getReferenceById(id);
-        medico.darBajaMedico();
+        medico.setActivo(false);
         return ResponseEntity.noContent().build();
     }
 
